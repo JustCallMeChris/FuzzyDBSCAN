@@ -5,6 +5,3 @@ def visualizeClustering(data, clustering):
     print "Chris' Function"
     
     return "todo"
-
-
-print "Das ist auch ein GIT-Test"
