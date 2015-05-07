@@ -3,5 +3,6 @@
 # the number of data points a core point has to have at least and at most.
 # Output is a vector of clusters for every data point.
 def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
-    print "bla"
+    print "Arne's Function"
+    
     return "todo"

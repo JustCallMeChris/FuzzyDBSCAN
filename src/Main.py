@@ -15,3 +15,5 @@ def main(data, eps, minPtsMin, minPtsMax):
     
     # Show a nice picture :)
     Chris.visualizeClustering(data, clustering)
+
+main(1,2,3,4)
