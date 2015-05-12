@@ -3,6 +3,8 @@
 # list of cluster ids for the given data points (clustering).
 
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 def visualizeClustering(data, clustering):
     
