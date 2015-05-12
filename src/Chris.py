@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 
 def visualizeClustering(data, clustering):
     
+    data = np.array(data)
+    clustering = np.array(clustering)
+    
     unique_labels = set(clustering) # eliminates multiple values
     colors = plt.cm.Spectral(np.linspace(0, 1, len(unique_labels))) # color for each cluster 
     
