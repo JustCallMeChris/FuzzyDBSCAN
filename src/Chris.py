@@ -18,11 +18,11 @@ def visualizeClustering(data, clustering):
         if k == -1:
             color = 'k'   # noise is shown as black dots
 
-        class_member_mask = (labels == k)   #true/false matrix to know which dots belongs to cluster
+        class_member_mask = (clustering == k)   #true/false matrix to know which dots belongs to cluster
 
         xy = data[class_member_mask] #points of the cluster or noise    
               
         
         plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=color, markeredgecolor='k', markersize=6)   #form, color, bordercolor
-        #plt.title('Clustering with DBSCAN')
-        plt.show()
+    #plt.title('Clustering with DBSCAN')
+    plt.show()
