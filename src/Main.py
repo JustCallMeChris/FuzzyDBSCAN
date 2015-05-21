@@ -12,12 +12,12 @@ data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
 # enough points in it's epsilon neighborhood.  
 def main(data, eps, minPtsMin, minPtsMax):
     # Compute distances of data points
-    distances = Andreas.computeDistances(data)
+    distances = Chris.computeDistances(data)
     
     # Create a clustering using fuzzy dbscan
     clustering = Arne.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax)
     
     # Show a nice picture :)
-    Chris.visualizeClustering(data, clustering)
+    Plotter.visualizeClustering(data, clustering)
 
 main(data,2.0,5,10)
