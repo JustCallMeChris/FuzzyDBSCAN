@@ -5,6 +5,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+#TODO Ausgabe PNG + Link zum File
 
 def visualizeClustering(data, clustering):
     
