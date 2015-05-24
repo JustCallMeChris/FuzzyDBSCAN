@@ -30,9 +30,9 @@ def arffFileToArrayOfPoints(arffFile):
     return arrayOfPoints
 
 
-def computeDistances(arffFile):
+def computeDistances(data):
     
-    arrayOfPoints = arffFileToArrayOfPoints(arffFile)
+    arrayOfPoints = data #arffFileToArrayOfPoints(arffFile)
     lenArrayOfPoints = len(arrayOfPoints)
     dimension = len(arrayOfPoints[0])
     
