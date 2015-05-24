@@ -33,17 +33,33 @@ def arffFileToArrayOfPoints(arffFile):
 def computeDistances(arffFile):
     
     arrayOfPoints = arffFileToArrayOfPoints(arffFile)
-    #print arrayOfPoints
-
+    lenArrayOfPoints = len(arrayOfPoints)
+    dimension = len(arrayOfPoints[0])
     
-    # TODO: implement function which computes euclide distance 
+    distanceMatrix = []
+    
+    # Rows
+    for i in range(lenArrayOfPoints): 
         
-    return "todo"
+        distanceCollector = [[]]
+        # Columns
+        for j in range(lenArrayOfPoints): 
+            if i >= j: 
+                # Fills upper triangle matrix with 0
+                distanceCollector[0].extend([0])
+            else:
+                euclideanDistanceAddition = 0
+                
+                # Computes Euclidean distance
+                for k in range(dimension):
+                    euclideanDistanceAddition = euclideanDistanceAddition + (arrayOfPoints[i][k]-arrayOfPoints[j][k])**2
+                euclideanDistance = euclideanDistanceAddition**(1/2.0)   
+                distanceCollector[0].extend([euclideanDistance])
+        
+        # Adds row to array of distance matrix        
+        distanceMatrix.extend(distanceCollector)
+    distanceMatrix = np.array(distanceMatrix)
 
-
-
-
-
-
+    return distanceMatrix
 
 
