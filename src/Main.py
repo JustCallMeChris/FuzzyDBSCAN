@@ -10,7 +10,9 @@ import numpy as np
 
 
 # Load test data
-data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
+#data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
+data = open("../iris.arff","r")
+
 # Parameters for fuzzy dbscan clustering
 minPtsMin = 5
 minPtsMax = 10
@@ -28,10 +30,10 @@ def main(data, eps, minPtsMin, minPtsMax):
     distances = Chris.computeDistances(data)
     
     # Create a clustering using fuzzy dbscan
-    clustering = Arne.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax)
+    #clustering = Arne.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax)
     
     # Show a nice picture :)
-    Plotter.visualizeClustering(data, clustering)
+    #Plotter.visualizeClustering(data, clustering)
 
 # Start program
 main(data,epsilon,minPtsMin,minPtsMax)
