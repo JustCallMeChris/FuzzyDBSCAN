@@ -45,12 +45,12 @@ def computeDistances(arffFile):
         # Columns
         for j in range(lenArrayOfPoints): 
             if i >= j: 
-                # Fills upper triangle matrix with 0
+                # Fills lower triangular matrix with 0
                 distanceCollector[0].extend([0])
             else:
                 euclideanDistanceAddition = 0
                 
-                # Computes Euclidean distance
+                # Computes euclidean distance
                 for k in range(dimension):
                     euclideanDistanceAddition = euclideanDistanceAddition + (arrayOfPoints[i][k]-arrayOfPoints[j][k])**2
                 euclideanDistance = euclideanDistanceAddition**(1/2.0)   
@@ -58,6 +58,7 @@ def computeDistances(arffFile):
         
         # Adds row to array of distance matrix        
         distanceMatrix.extend(distanceCollector)
+    #Distance Matrix as NumpyArray    
     distanceMatrix = np.array(distanceMatrix)
 
     return distanceMatrix
