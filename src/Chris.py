@@ -62,6 +62,6 @@ def computeDistances(data):
     #Distance Matrix as NumpyArray    
     distanceMatrix = np.array(distanceMatrix)
 
-    return distanceMatrix
+    return distanceMatrix 
 
 

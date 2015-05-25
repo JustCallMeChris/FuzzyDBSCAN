@@ -7,7 +7,7 @@ import numpy as np
 
 #TODO Ausgabe PNG + Link zum File
 
-def visualizeClustering(data, clustering):
+def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     
     data = np.array(data)
     #print clustering
@@ -25,5 +25,6 @@ def visualizeClustering(data, clustering):
               
         
         plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=color, markeredgecolor='k', markersize=6)   #form, color, bordercolor
-    #plt.title('Clustering with DBSCAN')
+    plt.title('Fuzzy DBSCAN Clustering')
+    plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
     plt.show()
