@@ -1,3 +1,5 @@
+import numpy as np
+
 # This function executes a fuzzy dbscan algorithm.
 # Input is a numpy matrix of data points (data), a matrix of distances (distances)
 # the number of data points a core point has to have at least and at most.
@@ -102,3 +104,41 @@ def computeMembershipDegree(numNeighbors, minPtsMin, minPtsMax):
         return float(numNeighbors - minPtsMin) / float(minPtsMax - minPtsMin)
     if numNeighbors <= minPtsMin:
         return 0;
+
+# This function computes the euclidean distance of a matrix of data points.
+# Input is the numpy matrix of data points.
+# Output is a matrix of (data point x data point), that is filled with numbers/distances.
+# Can still be optimized, but works for now
+def computeDistances(data):
+    
+    arrayOfPoints = data #arffFileToArrayOfPoints(arffFile)
+    lenArrayOfPoints = len(arrayOfPoints)
+    dimension = len(arrayOfPoints[0])
+    
+    distanceMatrix = []
+    
+    # Rows
+    for i in range(lenArrayOfPoints): 
+        
+        distanceCollector = [[]]
+        # Columns
+        for j in range(lenArrayOfPoints): 
+            if i == j: 
+                # Fills lower triangular matrix with 0
+                distanceCollector[0].extend([0])
+            else:
+                euclideanDistanceAddition = 0
+                
+                # Computes euclidean distance
+                for k in range(dimension):
+                    euclideanDistanceAddition = euclideanDistanceAddition + (arrayOfPoints[i][k]-arrayOfPoints[j][k])**2
+                    
+                euclideanDistance = euclideanDistanceAddition**(1/2.0)   
+                distanceCollector[0].extend([euclideanDistance])
+        
+        # Adds row to array of distance matrix        
+        distanceMatrix.extend(distanceCollector)
+    #Distance Matrix as NumpyArray    
+    distanceMatrix = np.array(distanceMatrix)
+
+    return distanceMatrix
