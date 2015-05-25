@@ -44,7 +44,7 @@ def computeDistances(data):
         distanceCollector = [[]]
         # Columns
         for j in range(lenArrayOfPoints): 
-            if i >= j: 
+            if i == j: 
                 # Fills lower triangular matrix with 0
                 distanceCollector[0].extend([0])
             else:
@@ -53,6 +53,7 @@ def computeDistances(data):
                 # Computes euclidean distance
                 for k in range(dimension):
                     euclideanDistanceAddition = euclideanDistanceAddition + (arrayOfPoints[i][k]-arrayOfPoints[j][k])**2
+                    
                 euclideanDistance = euclideanDistanceAddition**(1/2.0)   
                 distanceCollector[0].extend([euclideanDistance])
         

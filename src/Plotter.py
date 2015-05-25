@@ -10,9 +10,9 @@ import numpy as np
 def visualizeClustering(data, clustering):
     
     data = np.array(data)
-    clustering = np.array(clustering)
+    #print clustering
     
-    unique_labels = set(clustering) # eliminates multiple values
+    unique_labels =set(np.unique(clustering)) # eliminates multiple values
     colors = plt.cm.Spectral(np.linspace(0, 1, len(unique_labels))) # color for each cluster 
     
     for k, color in zip(unique_labels, colors): # colored dot for dot

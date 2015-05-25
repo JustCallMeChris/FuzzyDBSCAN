@@ -42,22 +42,25 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
         # Compute eps-neighborhood of current data point
         neighbors = computeNeighbors(distances, i, eps) 
         
-        # If not enough neighors: This data point is noise
+        # If not enough neighbors: This data point is noise
         # which is already stored in membership matrix!
         # If this data point is a core point, treat it appropriately.
         if len(neighbors) > minPtsMin:
+            print "Core point at: " , i , " with " , len(neighbors) , " points!"
             # Increment cluster id
             currentCluster += 1
             # Add a column to memberships if necessary
-            if currentCluster <> 0:
-                newShape = memberships.shape
-                newShape[1] += 1
-                newMemberships = np.empty(newShape, dtype=float)
+            if currentCluster != 0:
+                print "add another cluster"
+                shape = memberships.shape
+                newColCount = shape[1] + 1
+                newMemberships = np.empty((shape[0],newColCount), dtype=float)
                 newMemberships[:] = -1
                 newMemberships[:,:-1] = memberships
                 memberships = newMemberships
+                
             expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances)
-    
+            
     ################################################
     ######     Step 2: Compute clustering     ######
     ######     out of membership degrees      ######
@@ -65,7 +68,8 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
     # Data structure of the clustering
     # Entries are noise if -1 or
     # cluster indizes otherwise.
-    clustering = np.empty((numPoints,1))
+    # Empty array
+    clustering = []
     
     # Find maximum membership degrees for every data point
     # and appropriately assign cluster ids to the data points.
@@ -79,11 +83,11 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
                 maxDegreeCluster = j
         
         # Assign cluster to current data point
-        clustering[i] = maxDegreeCluster
-
-    # Print clustering
-    for i in range(0, numPoints):
-        print i , ", " , clustering[i]
+        # or as a noise point if maxDegree is -1
+        if maxDegreeOfPoint < 0:
+            clustering.append(-1)
+        else:
+            clustering.append(maxDegreeCluster)
     
     return clustering
 
@@ -94,7 +98,7 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
 # eps - epsilon for epsilon neighborhood
 def computeNeighbors(distances, point, eps):
     neighbors = set()
-    numPoints = distances.shape[0]
+    numPoints = distances.shape[1]
     for i in range(0,numPoints):
         if distances[point][i] <= eps:
             neighbors.add(i)
@@ -110,7 +114,9 @@ def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, mem
     # Add data point to the current cluster with fuzzy membership degree
     memberships[point][currentCluster] = computeMembershipDegree(len(neighbors), minPtsMin, minPtsMax)
     
-    for i in neighbors:
+    # As long as neighbors is not empty
+    while neighbors:
+        i = neighbors.pop()
         # If this neighbor is already visited
         if visited[i]:
             continue
@@ -122,7 +128,8 @@ def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, mem
         neighbors2 = computeNeighbors(distances, i, eps)
 
         if len(neighbors2) > minPtsMin:
-            neighbors.add_all(neighbors2)
+            print "Core point at: " , i , " with " , len(neighbors2) , " points!"
+            neighbors = neighbors.union(neighbors2)
             memberships[i][currentCluster] = computeMembershipDegree(len(neighbors2), minPtsMin, minPtsMax)
         else:
             memberships[i][currentCluster] = 0
