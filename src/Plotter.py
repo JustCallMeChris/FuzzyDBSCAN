@@ -4,6 +4,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 #TODO Ausgabe PNG + Link zum File
 
@@ -27,4 +28,23 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
         plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=color, markeredgecolor='k', markersize=6)   #form, color, bordercolor
     plt.title('Fuzzy DBSCAN Clustering')
     plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
-    plt.show()
+    #plt.draw()
+    
+    # Saves the image
+    plt.savefig("fuzzyDBSCAN.png", dpi=100)
+    
+    # Prints fullpath of the file
+    full_path = os.path.realpath(__file__)
+    path, file = os.path.split(full_path)
+    print(path+"/fuzzyDBSCAN.png") 
+    
+    # Shows figure in separate popup-window
+    #plt.show()
+
+
+
+
+
+    
+    
+    
