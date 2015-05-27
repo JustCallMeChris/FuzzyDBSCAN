@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-#TODO Ausgabe PNG + Link zum File
-
 def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     
     data = np.array(data)
@@ -36,16 +34,8 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     
     # Prints fullpath of the file
     full_path = os.path.realpath(__file__)
-    path, file = os.path.split(full_path)
-    print(path+"/"+imageName) 
+    path, f = os.path.split(full_path)
+    print(path + os.sep + imageName) 
     
     # Shows figure in separate popup-window
     #plt.show()
-
-
-
-
-
-    
-    
-    
