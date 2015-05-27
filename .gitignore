@@ -1,3 +1,5 @@
 /src/*.pyc
 /.project
 /.pydevproject
+
+src/Main.py
