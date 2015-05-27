@@ -8,8 +8,8 @@ data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
 #data = Chris.arffFileToArrayOfPoints(data)
 # Test parameters for fuzzy dbscan clustering
 minPtsMin = 4
-minPtsMax = 20
-epsilon = 2.0
+minPtsMax = 10
+epsilon = 1.5
 
 # Function to read data out of arff file
 def arffFileToArrayOfPoints(arffFile):
