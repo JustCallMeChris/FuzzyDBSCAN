@@ -31,12 +31,13 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     #plt.draw()
     
     # Saves the image
-    plt.savefig("fuzzyDBSCAN.png", dpi=100)
+    imageName = "fuzzyDBSCAN.png"
+    plt.savefig(imageName, dpi=100)
     
     # Prints fullpath of the file
     full_path = os.path.realpath(__file__)
     path, file = os.path.split(full_path)
-    print(path+"/fuzzyDBSCAN.png") 
+    print(path+"/"+imageName) 
     
     # Shows figure in separate popup-window
     #plt.show()
