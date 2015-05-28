@@ -11,7 +11,6 @@ import tempfile as tf
 def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     
     data = np.array(data)
-    #print clustering
     
     unique_labels =set(np.unique(clustering)) # eliminates multiple values
     colors = plt.cm.Spectral(np.linspace(0, 1, len(unique_labels))) # color for each cluster 
@@ -29,6 +28,10 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     plt.title('Fuzzy DBSCAN Clustering')
     plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
     #plt.draw()
+    
+    # Prints the labels of the cluster line by line
+    for i in range(len(clustering)):
+        print str(clustering[i])#+"\n" 
     
     # Saves the image
     imageName = "fuzzyDBSCAN.png"
