@@ -4,12 +4,12 @@ import numpy as np
 
 # Load test data
 data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
-#data = open("../iris.arff","r")
-#data = Chris.arffFileToArrayOfPoints(data)
+pathToArffFile = "../iris.arff"
+
 # Test parameters for fuzzy dbscan clustering
 minPtsMin = 4
 minPtsMax = 10
-epsilon = 1.5
+epsilon = 0.5
 
 # Function to read data out of arff file
 def arffFileToArrayOfPoints(arffFile):
@@ -33,9 +33,10 @@ def arffFileToArrayOfPoints(arffFile):
     # Splits array into array of array, each array contains the coordinates of the point
     arrayOfPoints = [listOfDataPoints[i:i+dimension] for i in range(0, len(listOfDataPoints), dimension)]
     
+    arrayOfPoints = np.array(arrayOfPoints)
+    
     # Array of array, each array contains the coordinates of the point, like [[5.1, 3.5, 1.4, 0.2], .., [5.0, 3.6, 1.4, 0.2]] 
     return arrayOfPoints
-
 
 # This function executes fuzzy dbscan of ... on a given set of data points.
 # The algorithm is based on Fuzzy Core DBScan Clustering Algorithm by
@@ -47,9 +48,16 @@ def arffFileToArrayOfPoints(arffFile):
 # the epsilon distance and an interval between minPtsMin
 # and minPtsMax that shows if a point has enough points
 # in it's epsilon neighborhood to be a core point.
-# showClustering is a boolean that tells the program
-# to visualize the clustering or not.
-def main(data, eps, minPtsMin, minPtsMax, showClustering = True):
+# saveImage is a boolean that tells the program
+# to save a picture of the clustering or not.
+# arrFile is the full path to an arff file. This file
+# is used as data if the path is not empty.
+def main(data, eps, minPtsMin, minPtsMax, saveImage = True, arffFile = ""):
+    
+    if len(arffFile) > 0:
+        arfff = open(arffFile,"r")
+        data = arffFileToArrayOfPoints(arfff)
+    
     # Compute distances of data points
     distances = FuzzyDBSCAN.computeDistances(data)
     
@@ -57,8 +65,8 @@ def main(data, eps, minPtsMin, minPtsMax, showClustering = True):
     clustering = FuzzyDBSCAN.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax)
     
     # Show a nice picture if desired
-    if showClustering:
+    if saveImage:
         Plotter.visualizeClustering(data, clustering, eps, minPtsMin, minPtsMax)
 
 # Start program for test
-main(data,epsilon,minPtsMin,minPtsMax)
+main(data, epsilon, minPtsMin, minPtsMax, True, pathToArffFile)

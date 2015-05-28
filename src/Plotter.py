@@ -5,11 +5,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import tempfile as tf
+
 
 def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     
     data = np.array(data)
-    #print clustering
     
     unique_labels =set(np.unique(clustering)) # eliminates multiple values
     colors = plt.cm.Spectral(np.linspace(0, 1, len(unique_labels))) # color for each cluster 
@@ -28,14 +29,20 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
     #plt.draw()
     
+    # Prints the labels of the cluster line by line
+    for i in range(len(clustering)):
+        print str(clustering[i])#+"\n" 
+    
     # Saves the image
     imageName = "fuzzyDBSCAN.png"
-    plt.savefig(imageName, dpi=100)
+    tempPath = tf.mkdtemp()
+    plt.savefig(tempPath+os.sep+imageName, dpi=100)
+    print("# Image: "+tempPath + os.sep + imageName)
     
     # Prints fullpath of the file
-    full_path = os.path.realpath(__file__)
-    path, f = os.path.split(full_path)
-    print(path + os.sep + imageName) 
+    #full_path = os.path.realpath(__file__)
+    #path, f = os.path.split(full_path)
+    #print(path + os.sep + imageName) 
     
     # Shows figure in separate popup-window
     #plt.show()
