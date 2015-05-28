@@ -174,7 +174,7 @@ def computeDistances(data):
         distanceCollector = [[]]
         # Columns
         for j in range(lenArrayOfPoints): 
-            if i == j: 
+            if i >= j: 
                 # Fills lower triangular matrix with 0
                 distanceCollector[0].extend([0])
             else:
@@ -189,7 +189,8 @@ def computeDistances(data):
         
         # Adds row to array of distance matrix        
         distanceMatrix.extend(distanceCollector)
-    #Distance Matrix as NumpyArray    
+    #Distance Matrix as NumpyArray  
     distanceMatrix = np.array(distanceMatrix)
+    #print distanceMatrix  
 
     return distanceMatrix
