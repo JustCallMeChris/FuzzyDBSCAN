@@ -4,12 +4,14 @@ import numpy as np
 
 # Load test data
 data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
-pathToArffFile = "../iris.arff"
+#data = np.loadtxt(open("../moons.csv","r"),delimiter=";")
+#pathToArffFile = "../iris.arff"
+pathToArffFile = ""
 
 # Test parameters for fuzzy dbscan clustering
-minPtsMin = 4
+minPtsMin = 5
 minPtsMax = 10
-epsilon = 0.5
+epsilon = 2.0
 
 # Function to read data out of arff file
 def arffFileToArrayOfPoints(arffFile):
@@ -52,7 +54,7 @@ def arffFileToArrayOfPoints(arffFile):
 # to save a picture of the clustering or not.
 # arrFile is the full path to an arff file. This file
 # is used as data if the path is not empty.
-def main(data, eps, minPtsMin, minPtsMax, saveImage = True, arffFile = ""):
+def main(data, eps, minPtsMin, minPtsMax, saveImage = True, arffFile = "", printClusteringToStdout = True):
     
     if len(arffFile) > 0:
         arfff = open(arffFile,"r")
@@ -62,7 +64,7 @@ def main(data, eps, minPtsMin, minPtsMax, saveImage = True, arffFile = ""):
     distances = FuzzyDBSCAN.computeDistances(data)
     
     # Create a clustering using fuzzy dbscan
-    clustering = FuzzyDBSCAN.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax)
+    clustering = FuzzyDBSCAN.fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax, printClusteringToStdout)
     
     # Show a nice picture if desired
     if saveImage:

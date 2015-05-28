@@ -29,10 +29,6 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
     #plt.draw()
     
-    # Prints the labels of the cluster line by line
-    for i in range(len(clustering)):
-        print str(clustering[i])#+"\n" 
-    
     # Saves the image
     imageName = "fuzzyDBSCAN.png"
     tempPath = tf.mkdtemp()

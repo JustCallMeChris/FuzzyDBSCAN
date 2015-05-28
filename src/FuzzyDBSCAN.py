@@ -1,10 +1,12 @@
 import numpy as np
 
 # This function executes a fuzzy dbscan algorithm.
-# Input is a numpy matrix of data points (data), a matrix of distances (distances)
-# the number of data points a core point has to have at least and at most.
+# Input is a numpy matrix of data points (data),
+# a matrix of distances (distances), the number of data points
+# a core point has to have at least and at most and a boolean
+# if the clustering should be printed to stdout.
 # Output is a vector of clusters for every data point.
-def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
+def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax, printClustering):
     # Dimensions of data matrix
     numPoints = data.shape[0]
     
@@ -19,7 +21,7 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
     # Array to store if a point is already visited.
     # Visited indicates we already computed the
     # eps-neighborhood once for core points.
-    visited = [0] * numPoints
+    visited = [False] * numPoints
     
     for i in range(numPoints):
         # If the current data point was already visited before,
@@ -45,7 +47,7 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
                     row.append(-1)
             
             # Grow this cluster
-            expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster)
+            expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data)
         
     # Compute clustering out of membership matrix
     # -1 is noise, everything else is a cluster index
@@ -59,6 +61,9 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax):
                 cluster = j
                 maxMembership = currentMembership
         clustering.append(cluster)
+        # Print clustering to stdout
+        if printClustering:
+            print cluster
     
     return clustering
 
@@ -87,7 +92,7 @@ def computeNeighbors(distances, point, eps):
 #
 # This function grows a cluster such that every data point of the cluster currentCluster will be found.
 #
-def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster):
+def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data):
     # set of border points of this cluster
     borderPoints = set()
     # Set of core points of this cluster
@@ -100,7 +105,8 @@ def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, mem
     # As long as neighbors is not empty
     while neighbors:
         i = neighbors.pop()
-        # If this neighbor is already visited
+        # If this neighbor is not already visited
+        # and not a border point.
         if not visited[i] and not (i in borderPoints):
             # Compute neighbors of current neighbor
             neighbors2 = computeNeighbors(distances, i, eps)
