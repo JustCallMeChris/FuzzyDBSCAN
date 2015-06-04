@@ -1,17 +1,27 @@
-# Show a nice picture ;)
-# Input: Numpy array of data points (data) and
-# List of cluster labels for the given data points (clustering).
-
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import tempfile as tf
 
+# This function plots an image for given set of data points. 
+# The clustering is printed to standard out.
+#
+# Parameters are:
+# data:           a numpy.ndarray with data points as rows and columns as attributes.
+# clustering:     list of cluster labels for given data points
+# eps:            epsilon distance
+# minPoints:      minimum amount of points to be in the neighborhood of a
+#                 data point p for p to be recognized as a core point.
+# maxPoints:      maximum amount a points in the neighborhood of a data point
+#                 which leads to maximum membership degree of 1 for points with
+#                 at least minPtsMax neighbors. This parameter helps to recognize
+#                 more degrees of density. Thats's why it is recommended to use
+#                 big values.
+
 
 def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
 
     #data = np.array(data)
-    #print type(data)
 
     # Eliminates multiple values
     unique_labels =set(np.unique(clustering))
@@ -34,9 +44,8 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
 
     plt.title('Fuzzy DBSCAN Clustering')
     plt.xlabel('Eps: '+str(eps)+'    minPtsMin: '+str(minPoints)+'    minPtsMax: '+str(maxPoints))
-    #plt.draw()
 
-    # Saves the image
+    # Saves the image in temporary folder
     imageName = "fuzzyDBSCAN.png"
     tempPath = tf.mkdtemp()
     plt.savefig(tempPath+os.sep+imageName, dpi=100)
