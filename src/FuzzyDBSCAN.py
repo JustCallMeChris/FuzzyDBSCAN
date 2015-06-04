@@ -1,12 +1,25 @@
 import numpy as np
 
 # This function executes a fuzzy dbscan algorithm.
-# Input is a numpy matrix of data points (data),
-# a matrix of distances (distances), the number of data points
-# a core point has to have at least and at most and a boolean
-# if the clustering should be printed to stdout.
-# Output is a vector of clusters for every data point.
-def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax, printClustering):
+# Parameters are:
+# eps:            epsilon distance
+# minPtsMin:      minimum amount of points to be in the neighborhood of a
+#                 data point p for p to be recognized as a core point.
+# mintPtsMax:     maximum amount a points in the neighborhood of a data point
+#                 which leads to maximum membership degree of 1 for points with
+#                 at least minPtsMax neighbors. This parameter helps to recognize
+#                 more degrees of density. Thats's why it is recommended to use
+#                 big values.
+# data:           String containing the path to an available arff file
+#                 OR
+#                 a numpy.ndarray with data points as rows and columns as attributes
+#
+# Returns a vector of cluster ids, one cluster id for each data point.
+def fuzzyDBSCAN(data, eps, minPtsMin, minPtsMax):
+    
+    # Compute distances of data points
+    distances = computeDistances(data)
+    
     # Dimensions of data matrix
     numPoints = data.shape[0]
     
@@ -61,17 +74,17 @@ def fuzzyDBSCAN(data, distances, eps, minPtsMin, minPtsMax, printClustering):
                 cluster = j
                 maxMembership = currentMembership
         clustering.append(cluster)
-        # Print clustering to stdout
-        if printClustering:
-            print cluster
     
     return clustering
 
-# Function to compute the eps-neighborhood of
-# a data point as a set of indizes.
-# distances - distance matrix (upper triangular matrix)
-# point - index of data point in distance matrix
-# eps - epsilon for epsilon neighborhood
+# Function to compute the eps-neighborhood of a data point as a set of indizes.
+#
+# Parameters are:
+# distances:    numpy.ndarray that is an upper triangular matrix with diagonal 0-entries.
+# point:        Index in distance matrix of data point to compute the neighborhood for.
+# eps:          Value to define distance of epsilon neighborhood epsilon.
+#
+# Returns set of neighbor points as indizes into distance matrix.
 def computeNeighbors(distances, point, eps):
     neighbors = set()
     
@@ -163,14 +176,15 @@ def computeMembershipDegree(numNeighbors, minPtsMin, minPtsMax):
         return 0;
 
 # This function computes the euclidean distance of a matrix of data points.
-# Input is the numpy matrix of data points.
-# Output is a matrix of (data point x data point), that is filled with numbers/distances.
-# Can still be optimized, but works for now
+# Parameters are:
+# data:        numpy.ndarray of data points.
+#
+# Returns an upper triangular matrix (with diagonal 0-values),
+# that is filled with numbers/distances.
 def computeDistances(data):
 
-    arrayOfPoints = data #arffFileToArrayOfPoints(arffFile)
-    lenArrayOfPoints = len(arrayOfPoints)
-    dimension = len(arrayOfPoints[0])
+    lenArrayOfPoints = len(data)
+    dimension = len(data[0])
     
     distanceMatrix = []
     
@@ -188,7 +202,7 @@ def computeDistances(data):
                 
                 # Computes euclidean distance
                 for k in range(dimension):
-                    euclideanDistanceAddition = euclideanDistanceAddition + (arrayOfPoints[i][k]-arrayOfPoints[j][k])**2
+                    euclideanDistanceAddition = euclideanDistanceAddition + (data[i][k]-data[j][k])**2
                     
                 euclideanDistance = euclideanDistanceAddition**(1/2.0)   
                 distanceCollector[0].extend([euclideanDistance])
