@@ -62,7 +62,7 @@ def fuzzyDBSCAN(data, eps, minPtsMin, minPtsMax):
             # Grow this cluster
             expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data)
         
-    # Compute clustering out of membership matrix
+    # Compute crisp clustering out of membership matrix
     # -1 is noise, everything else is a cluster index
     clustering = []
     for i in range(numPoints):
@@ -105,6 +105,23 @@ def computeNeighbors(distances, point, eps):
 #
 # This function grows a cluster such that every data point of the cluster currentCluster will be found.
 #
+# Parameters are:
+# point:            First processed core point of this cluster
+# neighbors:        Epsilon neighborhood of point (this is a set)
+# eps:              Value to define distance of epsilon neighborhood epsilon.
+# minPtsMin:        minimum amount of points to be in the neighborhood of a
+#                   data point p for p to be recognized as a core point.
+# mintPtsMax:       maximum amount a points in the neighborhood of a data point
+#                   which leads to maximum membership degree of 1 for points with
+#                   at least minPtsMax neighbors. This parameter helps to recognize
+#                   more degrees of density. Thats's why it is recommended to use
+#                   big values.
+# visited:          Array of flags to show if the the epsilon neighborhood has already
+#                   been computed for each of the data points.
+# memberships:      Matrix to store membership degrees of points.
+# distances:        numpy.ndarray that is an upper triangular matrix with diagonal 0-entries.
+# currentCluster:   Index of the currently processed cluster
+# data:             A numpy.ndarray with data points as rows and columns as attributes.
 def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data):
     # set of border points of this cluster
     borderPoints = set()
@@ -164,7 +181,16 @@ def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, mem
     return
     
 # Function to calculate fuzzy membership degrees.
-# numNeighbors is the number of neighbors of a data point. 
+#
+# Parameters are:
+# numNeighbors:    Number of neighbors of a data point.
+# minPtsMin:       minimum amount of points to be in the neighborhood of a
+#                  data point p for p to be recognized as a core point.
+# mintPtsMax:      maximum amount a points in the neighborhood of a data point
+#                  which leads to maximum membership degree of 1 for points with
+#                  at least minPtsMax neighbors. This parameter helps to recognize
+#                  more degrees of density. Thats's why it is recommended to use
+#                  big values.
 def computeMembershipDegree(numNeighbors, minPtsMin, minPtsMax):
     if numNeighbors >= minPtsMax:
         return 1
@@ -175,7 +201,7 @@ def computeMembershipDegree(numNeighbors, minPtsMin, minPtsMax):
     if numNeighbors <= minPtsMin:
         return 0;
 
-# This function computes the euclidean distance of a matrix of data points.
+# This function computes the Euclidean distance of a matrix of data points.
 # Parameters are:
 # data:        numpy.ndarray of data points.
 #
@@ -209,8 +235,7 @@ def computeDistances(data):
         
         # Adds row to array of distance matrix        
         distanceMatrix.extend(distanceCollector)
-    #Distance Matrix as NumpyArray  
-    distanceMatrix = np.array(distanceMatrix)
-    #print distanceMatrix  
+    # Distance Matrix as NumpyArray  
+    distanceMatrix = np.array(distanceMatrix)  
 
     return distanceMatrix

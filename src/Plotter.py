@@ -20,9 +20,6 @@ import tempfile as tf
 
 
 def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
-
-    #data = np.array(data)
-
     # Eliminates multiple values
     unique_labels =set(np.unique(clustering))
 
@@ -50,6 +47,3 @@ def visualizeClustering(data, clustering, eps, minPoints, maxPoints):
     tempPath = tf.mkdtemp()
     plt.savefig(tempPath+os.sep+imageName, dpi=100)
     print("# Image: "+tempPath + os.sep + imageName)
-
-    # Shows figure in popup-window
-    #plt.show()

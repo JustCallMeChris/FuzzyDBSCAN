@@ -73,18 +73,3 @@ def main(eps, minPtsMin, minPtsMax, data, createImage = True):
     # Show a nice picture if desired
     if createImage:
         Plotter.visualizeClustering(data, clustering, eps, minPtsMin, minPtsMax)
-
-
-############ TEST INFO ############
-# Load test data
-#data = np.loadtxt(open("../spirals.csv","r"),delimiter=";")
-#data = np.loadtxt(open("../moons.csv","r"),delimiter=";")
-#data = "../iris.arff"
-#data = "../empty.arff"
-#data = ""
-# Test parameters for fuzzy dbscan clustering
-#minPtsMin = 4
-#minPtsMax = 1000
-#epsilon = 2.0
-# Create clustering
-#main(epsilon, minPtsMin,minPtsMax, data)
