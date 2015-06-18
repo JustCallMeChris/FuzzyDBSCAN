@@ -10,9 +10,7 @@ import numpy as np
 #                 at least minPtsMax neighbors. This parameter helps to recognize
 #                 more degrees of density. Thats's why it is recommended to use
 #                 big values.
-# data:           String containing the path to an available arff file
-#                 OR
-#                 a numpy.ndarray with data points as rows and columns as attributes
+# data:           A numpy.ndarray with data points as rows and columns as attributes
 #
 # Returns a vector of cluster ids, one cluster id for each data point.
 def fuzzyDBSCAN(data, eps, minPtsMin, minPtsMax):
