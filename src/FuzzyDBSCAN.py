@@ -121,8 +121,7 @@ def computeNeighbors(distances, point, eps):
 # memberships:      Matrix to store membership degrees of points.
 # distances:        numpy.ndarray that is an upper triangular matrix with diagonal 0-entries.
 # currentCluster:   Index of the currently processed cluster
-# data:             A numpy.ndarray with data points as rows and columns as attributes.
-def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data):
+def expandFuzzyCluster(point, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster):
     # set of border points of this cluster
     borderPoints = set()
     # Set of core points of this cluster
