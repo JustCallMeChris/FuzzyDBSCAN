@@ -60,7 +60,7 @@ def fuzzyDBSCAN(data, eps, minPtsMin, minPtsMax):
                     row.append(-1)
             
             # Grow this cluster
-            expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster, data)
+            expandFuzzyCluster(i, neighbors, eps, minPtsMin, minPtsMax, visited, memberships, distances, currentCluster)
         
     # Compute crisp clustering out of membership matrix
     # -1 is noise, everything else is a cluster index
